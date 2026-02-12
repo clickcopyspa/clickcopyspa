@@ -72,7 +72,7 @@ function saveNumberplate(name, numberplate, usage) {
     }
     document.querySelector('.cancelEntry').click();
     let copied = document.createElement("div");
-    copied.classList.add("copiedHighlight");
+    copied.classList.add("passThruMessage");
     copied.id = generateRandomString(10);
     copied.innerHTML = "<em>" + message + "</em>";
     document.getElementById("permits-header").appendChild(copied);
@@ -248,7 +248,7 @@ document.addEventListener("click", function (e) {
 
         document.querySelector('.cancelEntry').click();
         let deletedHighlight = document.createElement("div");
-        deletedHighlight.classList.add("copiedHighlight");
+        deletedHighlight.classList.add("passThruMessage");
         deletedHighlight.id = generateRandomString(10);
         deletedHighlight.innerHTML = "<em>" + document.querySelector(".delete-confirm-numberplate").innerText + " (" + document.querySelector(".delete-confirm-name").innerText + ") has been deleted</em>";
         document.getElementById("permits-header").appendChild(deletedHighlight);
@@ -347,7 +347,7 @@ function importJSON() {
                 window.localStorage.setItem("permitsData", JSON.stringify(newData));
                 getNumberplates();
                 let passThruMessage = document.createElement("div");
-                passThruMessage.classList.add("copiedHighlight");
+                passThruMessage.classList.add("passThruMessage");
                 passThruMessage.id = generateRandomString(10);
                 passThruMessage.innerHTML = "<em>Numberplates have been imported</em>";
                 document.getElementById("permits-header").appendChild(passThruMessage);

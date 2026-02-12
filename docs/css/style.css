@@ -145,11 +145,21 @@ h1 {
   /* Transition opacity over 0.5 seconds with an ease timing function */
   transition: opacity 0.5s ease; }
 
-h1 .copiedHighlight {
+.passThruMessage {
+  position: absolute;
+  font-size: 0.8rem;
   bottom: -30px;
   left: 0;
-  right: unset;
-  top: unset; }
+  background: rgba(155, 244, 85, 0.5);
+  border: 2px solid #a8a348;
+  text-decoration: none;
+  color: #666;
+  padding: 2px 15px;
+  border-radius: 10px;
+  /* Initial visibility */
+  opacity: 1;
+  /* Transition opacity over 0.5 seconds with an ease timing function */
+  transition: opacity 0.5s ease; }
 
 .f-button.is-arrow {
   display: none !important; }
