@@ -24,7 +24,8 @@
       padding: 4px 5px 3px;
       display: flex;
       align-items: flex-end;
-      width: 9em; }
+      width: 9em;
+      justify-content: center; }
       .tabs-wrapper > .tabs > div.filter input {
         position: absolute;
         border: 3px solid transparent;
