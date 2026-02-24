@@ -7,21 +7,83 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="A simple webapp for managing numberplates for digital permitting">
     <title>Permit Management</title>
-    <link rel="stylesheet" href="css/style.css?v=6">
+    <link rel="stylesheet" href="css/style.css?v=7">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css" media="none"
         onload="this.media='all'" />
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
+    <style>
+        html.dark {
+            background: #000;
+        }
+    </style>
+    <script type="text/javascript">
+
+    const savedDarkMode = window.localStorage.getItem("permitsLightDarkMode");
+    if (!savedDarkMode) {
+        const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+        if (darkModeMql && darkModeMql.matches) {
+            // dark mode
+            document.documentElement.classList.add("dark");
+            document.getElementById("light-dark-toggle").checked = false;
+        } else {
+            // light mode
+            document.documentElement.classList.add("light");
+            document.getElementById("light-dark-toggle").checked = true;
+        }
+    }
+    else if (savedDarkMode === "light") {
+        document.documentElement.classList.add("light");
+        document.getElementById("light-dark-toggle").checked = true;
+    }
+    else if (savedDarkMode === "dark") {
+        document.documentElement.classList.add("dark");
+        document.getElementById("light-dark-toggle").checked = false;
+    }
+</script>
 </head>
 
-<body>
+<body style="opacity:0;">
+
     <main>
         <span class="help-wrapper" data-fancybox src="#helptext"><a class="help">?</a></span>
         <span class="github-wrapper"><a href="https://github.com/lindymad/permits" target="_blank"><img
-                    alt="Github Logo" src="img/github-mark.png" class="github-logo"></a></span>
+                    alt="Github Logo" src="img/GitHub_Invertocat_White.png" class="github-logo dark"><img
+                    alt="Github Logo" src="img/GitHub_Invertocat_Black.png" class="github-logo light"></a></span>
         <span class="qr-wrapper" data-fancybox src="#qrcode"><img src="img/qr-code.png" alt="QR Code thumbnail"></span>
+        <span class="light-dark-toggle-wrapper">
+            <span class = "toggle-switch">
+                <label for="light-dark-toggle">
+                    <input type = "checkbox" id="light-dark-toggle">
+                    <span class = "slider"></span>
+                </label>
+            </span>
+        </span>
+        <script type="text/javascript">
+    //const savedDarkMode = window.localStorage.getItem("permitsLightDarkMode");
+    if (!savedDarkMode) {
+        const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+        if (darkModeMql && darkModeMql.matches) {
+            // dark mode
+            document.documentElement.classList.add("dark");
+            document.getElementById("light-dark-toggle").checked = false;
+        } else {
+            // light mode
+            document.documentElement.classList.add("light");
+            document.getElementById("light-dark-toggle").checked = true;
+        }
+    }
+    else if (savedDarkMode === "light") {
+        document.documentElement.classList.add("light");
+        document.getElementById("light-dark-toggle").checked = true;
+    }
+    else if (savedDarkMode === "dark") {
+        document.documentElement.classList.add("dark");
+        document.getElementById("light-dark-toggle").checked = false;
+    }
+</script>
 
         <h1 id="permits-header">
             Permits
@@ -113,7 +175,7 @@
         </div>
     </main>
     <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
-    <script defer src="permits.js?v=2"></script>
+    <script defer src="permits.js?v=7"></script>
 </body>
 
 </html>

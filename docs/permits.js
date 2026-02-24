@@ -1,3 +1,6 @@
+
+
+
 document.getElementById("filter").addEventListener("input", function (e) {
     let filter = new RegExp(e.target.value, "gi");
     let entries = document.getElementById("permits-list").children;
@@ -45,6 +48,21 @@ tabs.addEventListener("click", function (e) {
     }
 });
 
+function setLightDark() {
+    if (!document.getElementById("light-dark-toggle").checked) {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+    }
+}
+
+document.getElementById("light-dark-toggle").addEventListener("change", function () {
+    setLightDark();
+    window.localStorage.setItem("permitsLightDarkMode", document.getElementById("light-dark-toggle").checked?"light":"dark");
+});
+
 function saveNumberplate(name, numberplate, usage, id) {
     let currData = JSON.parse(window.localStorage.getItem("permitsData"));
     if (typeof currData === "undefined" || !currData) {
@@ -53,21 +71,19 @@ function saveNumberplate(name, numberplate, usage, id) {
     let newData = [];
     let found = false;
     for (let existing of currData) {
-        if ((typeof existing.id === "undefined" && existing.numberplate === numberplate) || (typeof existing.id !== "undefined" && existing.id===id)) {
+        if ((typeof existing.id === "undefined" && existing.numberplate === numberplate) || (typeof existing.id !== "undefined" && existing.id === id)) {
             found = true;
             existing.name = name;
             existing.numberplate = numberplate;
             existing.usage = usage;
             if (typeof existing.id === "undefined") {
-                existing.id=generateRandomString(10);
+                existing.id = generateRandomString(10);
             }
-        }
-        else if (typeof existing.id !== "undefined" && existing.id!==id && existing.name===name) {
-            alert("You already have an entry with the name "+name);
+        } else if (typeof existing.id !== "undefined" && existing.id !== id && existing.name === name) {
+            alert("You already have an entry with the name " + name);
             return false;
-        }
-        else if (typeof existing.id !== "undefined" && existing.id!==id && existing.numberplate===numberplate) {
-            alert("You already have an entry with numberplate "+numberplate);
+        } else if (typeof existing.id !== "undefined" && existing.id !== id && existing.numberplate === numberplate) {
+            alert("You already have an entry with numberplate " + numberplate);
             return false;
         }
 
@@ -94,13 +110,17 @@ function saveNumberplate(name, numberplate, usage, id) {
 
         // Step 1: Start fading by setting opacity to 0
         element.style.opacity = 0;
-
+        element.remove();
         // Step 2: After transition ends, hide the element
         element.addEventListener("transitionend", function onTransitionEnd() {
+
             // Hide the element to free up space
             element.style.display = "none";
             // Remove the event listener to avoid reusing it accidentally
             element.removeEventListener("transitionend", onTransitionEnd);
+            // Remove the element
+
+            document.getElementById(element.id).remove();
         }, {once: true}); // { once: true } auto-removes the listener after it runs
 
     }, 2000);
@@ -116,26 +136,26 @@ function getUsage() {
 
 function getNumberplates() {
     let currData = JSON.parse(window.localStorage.getItem("permitsData"));
+    console.log(currData);
     if (typeof currData === "undefined" || !currData) {
         currData = [];
     }
     document.getElementById("permits-list").innerHTML = "";
-    if (currData.length===0) {
+    if (currData.length === 0) {
         let div = document.createElement("div");
-        div.innerHTML="<em>You have not yet added any permits</em>";
+        div.innerHTML = "<em>You have not yet added any permits</em>";
         div.classList.add("usage-frequent");
-            div.classList.add("usage-occasional");
-            div.classList.add("no-records");
+        div.classList.add("usage-occasional");
+        div.classList.add("no-records");
 
         document.getElementById("permits-list").appendChild(div);
-    }
-    else {
+    } else {
 
         for (let entry of currData) {
             let div = document.createElement("div");
             div.classList.add("usage-" + entry.usage);
             div.classList.add("entry");
-            div.dataset.id=typeof entry.id === "undefined"?"":entry.id;
+            div.dataset.id = typeof entry.id === "undefined" ? "" : entry.id;
             if (getUsage() && getUsage() !== entry.usage) {
                 div.classList.add("hidden");
             }
@@ -174,19 +194,18 @@ function getNumberplates() {
 }
 
 document.getElementById("addeditform").addEventListener("submit", function () {
-    let error="";
+    let error = "";
     if (!document.getElementById("addEditName").value) {
-        error+="You must enter a name.\n";
+        error += "You must enter a name.\n";
     }
     if (!document.getElementById("addEditNumberPlate").value) {
-        error+="You must enter a numberplate.\n";
+        error += "You must enter a numberplate.\n";
     }
     if (error) {
         alert(error);
-    }
-    else {
-        let id=document.getElementById("addEditId").value
-        if (!id) id=generateRandomString(10);
+    } else {
+        let id = document.getElementById("addEditId").value
+        if (!id) id = generateRandomString(10);
         if (saveNumberplate(document.getElementById("addEditName").value, document.getElementById("addEditNumberPlate").value, document.getElementById("addEditUsage").value, id)) {
             document.getElementById('addeditform').reset();
             getNumberplates();
@@ -254,7 +273,7 @@ document.addEventListener("click", function (e) {
 
             // Step 1: Start fading by setting opacity to 0
             element.style.opacity = 0;
-
+            element.remove();
             // Step 2: After transition ends, hide the element
             element.addEventListener("transitionend", function onTransitionEnd() {
                 // Hide the element to free up space
@@ -299,7 +318,7 @@ document.addEventListener("click", function (e) {
 
             // Step 1: Start fading by setting opacity to 0
             element.style.opacity = 0;
-
+            element.remove();
             // Step 2: After transition ends, hide the element
             element.addEventListener("transitionend", function onTransitionEnd() {
                 // Hide the element to free up space
@@ -401,7 +420,7 @@ function importJSON() {
 
                     // Step 1: Start fading by setting opacity to 0
                     element.style.opacity = 0;
-
+                    element.remove();
                     // Step 2: After transition ends, hide the element
                     element.addEventListener("transitionend", function onTransitionEnd() {
                         // Hide the element to free up space
@@ -421,8 +440,28 @@ function importJSON() {
 }
 
 
+
+setLightDark();
 getNumberplates();
 
+
+function fadeIn() {
+    var fade = document.body;
+    var intervalID = setInterval(function () {
+        if (!fade.style.opacity) {
+            fade.style.opacity = 0;
+        }
+        if (fade.style.opacity < 1) {
+            let op = parseFloat(fade.style.opacity);
+            op += 0.1;
+            fade.style.opacity=op;
+        } else {
+            clearInterval(intervalID);
+        }
+
+    }, 10);
+}
+setTimeout(function() {fadeIn();},30);
 Fancybox.bind("[data-fancybox]", {
     // Your custom options
     width: 700,

@@ -1,16 +1,46 @@
 :root {
-  --bg: #000;
-  --panel: #0a0a0a;
-  --panel-2: #0f0f0f;
 
-  --text: #fafafa;
-  --muted: #a1a1aa;
+  color-scheme: light dark;
+  --dark-bg: #000;
+  --dark-panel: #0a0a0a;
+  --dark-panel-2: #0f0f0f;
+  --dark-panel-3: #0b0b0b;
+  --dark-panel-4: #050505;
+  --dark-content: #070707;
 
-  --border: #262626;
-  --border-2: #1f1f1f;
+  --dark-text: #fafafa;
+  --dark-muted: #a1a1aa;
+  --dark-p: #d4d4d8;
 
-  --accent: #e5e7eb;
-  --link: #60a5fa;
+  --dark-border: #262626;
+  
+  --dark-border-2: #1f1f1f;
+
+  --dark-accent: #e5e7eb;
+  --dark-link: #60a5fa;
+  
+  --light-bg: #fff;
+  --light-panel: #fafafa;
+  --light-panel-2: #f0f0f0;
+  --light-panel-3: #eaeaea;
+  --light-panel-4: #e0e0e0;
+  --light-content: #fcfcfc;
+
+  --light-text: #333333;
+  --light-muted: #999999;
+  --light-p: #333333;
+
+  --light-border: #e0e0e0;
+  
+  --light-border-2: #f0f0f0;
+
+  --light-accent: #666666;
+  --light-link: blue;
+
+  --toggle-light: #d8dbe0;
+  --toggle-dark: #28292c;
+  --toggle-sun: yellow;
+  --toggle-sky: #5cc5ff;
 
   --radius: 10px;
   --radius-sm: 8px;
@@ -29,11 +59,34 @@ body {
   height: 100%;
 }
 
+
+.github-wrapper .github-logo.dark {
+  display: none;
+}
+
+.light {
+  /* forces light color-scheme */
+  color-scheme: light;
+}
+
+.light .github-wrapper .github-logo.light {
+  display: block;
+}
+.dark {
+  /* forces dark color-scheme */
+  color-scheme: dark;
+}
+.dark .github-wrapper .github-logo.light {
+  display: none;
+}
+.dark .github-wrapper .github-logo.dark {
+  display: block;
+}
 body {
   margin: 0;
   font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
+  background: light-dark(var(--light-bg), var(--dark-bg));
+  color: light-dark(var(--light-text), var(--dark-text));
 }
 
 
@@ -44,15 +97,71 @@ main {
   padding: 16px;
 }
 
-
 .github-wrapper,
 .qr-wrapper,
-.help-wrapper {
+.help-wrapper,
+.light-dark-toggle-wrapper {
   position: absolute;
   top: 14px;
   z-index: 20;
+  cursor: pointer;
 }
 
+.light-dark-toggle-wrapper {
+  right: 134px;
+  top: 18px;
+  transform: scale(0.7);
+  .toggle-switch {
+    display: block;
+  position: relative;
+  width: 35px;
+}
+
+label {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background-color: var(--toggle-dark);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+input {
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+input:checked ~ .slider {
+  background-color: var(--toggle-sky);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 2.6px;
+  left: 3.2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  box-shadow: inset 5.6px -0.8px 0 0 var(--toggle-light);
+  background-color: var(--toggle-dark);
+  transition: 0.3s;
+}
+
+input:checked ~ .slider::before {
+  transform: translateX(14px);
+  background-color: var(--toggle-sun);
+  box-shadow: none;
+}
+}
 .github-wrapper {
   right: 56px;
 
@@ -67,9 +176,11 @@ main {
     }
   }
 }
-
+a {
+  color: light-dark(var(--light-link), var(--dark-link));
+}
 .qr-wrapper {
-  right: 92px;
+  right: 96px;
 
   img {
     width: 22px;
@@ -87,15 +198,15 @@ main {
   right: 16px;
   width: 22px;
   height: 22px;
-  border: 1px solid var(--border);
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
   border-radius: 999px;
   display: grid;
   place-items: center;
-  background: var(--panel);
+  background: light-dark(var(--light-panel), var(--dark-panel));
 
   .help {
     position: static;
-    color: var(--text);
+    color: light-dark(var(--light-text), var(--dark-text));
     text-decoration: none;
     font-weight: 700;
   }
@@ -129,9 +240,9 @@ h1 {
 
 button {
   cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--text);
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
+  background: light-dark(var(--light-panel), var(--dark-panel));
+  color: light-dark(var(--light-text), var(--dark-text));
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 0.95rem;
@@ -139,7 +250,7 @@ button {
   transition: background 0.12s ease, border-color 0.12s ease;
 
   &:hover {
-    background: var(--panel-2);
+    background: light-dark(var(--light-panel-2), var(--dark-panel-2));
     border-color: #303030;
   }
 
@@ -159,22 +270,22 @@ button {
 
 .tabs-wrapper {
   margin-top: 14px;
-  border: 1px solid var(--border);
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--panel);
+  background: light-dark(var(--light-panel), var(--dark-panel));
 
 
   >.tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel);
+    border-bottom: 1px solid light-dark(var(--light-border), var(--dark-border));
+    background: light-dark(var(--light-panel), var(--dark-panel));
 
     >div,
     >button {
-      border-right: 1px solid var(--border);
+      border-right: 1px solid light-dark(var(--light-border), var(--dark-border));
       padding: 10px 12px;
       cursor: pointer;
       user-select: none;
@@ -188,7 +299,7 @@ button {
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      color: var(--muted);
+      color: light-dark(var(--light-muted), var(--dark-muted));
     }
 
     >div:nth-child(2),
@@ -197,14 +308,14 @@ button {
     }
 
     >.active {
-      color: var(--text);
-      background: #0b0b0b;
+      color: light-dark(var(--light-text), var(--dark-text));
+      background: light-dark(var(--light-panel-3), var(--dark-panel-3));
     }
 
 
     >.filter {
       grid-column: 1 / -1;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid light-dark(var(--light-border), var(--dark-border));
       border-right: 0;
       padding: 8px 10px;
       justify-content: stretch;
@@ -212,9 +323,9 @@ button {
 
       input {
         width: 100%;
-        border: 1px solid var(--border);
-        background: #050505;
-        color: var(--text);
+        border: 1px solid light-dark(var(--light-border), var(--dark-border));
+        background: light-dark(var(--light-panel-4), var(--dark-panel-4));
+        color: light-dark(var(--light-text), var(--dark-text));
         border-radius: 8px;
         padding: 10px 12px;
         font-size: 0.95rem;
@@ -229,7 +340,7 @@ button {
 
 
   >.content {
-    background: #070707;
+    background: light-dark(var(--light-content), var(--dark-content));
   }
 }
 
@@ -248,7 +359,7 @@ button {
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 12px 12px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid light-dark(var(--light-border), var(--dark-border));
 
     &:first-child {
       border-top: 0;
@@ -264,7 +375,7 @@ button {
 
 
 .entry-numberplate {
-  color: var(--link);
+  color: light-dark(var(--light-link), var(--dark-link));
   cursor: pointer;
   text-decoration: none;
   border: 1px solid rgba(96, 165, 250, 0.35);
@@ -300,21 +411,21 @@ button {
 }
 
 .f-html {
-  background: #090909 !important;
-  border: 1px solid var(--border);
+  background: light-dark(var(--light-content), var(--dark-content)) !important;
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
   border-radius: var(--radius);
   padding: 16px;
 
   h1,
   h2,
   p {
-    color: var(--text);
+    color: light-dark(var(--light-text), var(--dark-text));
   }
 
   .buttons-row {
     input {
-      color: var(--text) !important;
-      border: 1px solid var(--border) !important;
+      color: #fafafa !important;
+      border: 1px solid light-dark(var(--light-border), var(--dark-border)) !important;
       border-radius: var(--radius-sm) !important;
       padding: 10px 12px !important;
     }
@@ -337,15 +448,15 @@ form {
     margin: 0 0 12px 0;
 
     label {
-      color: var(--muted);
+      color: light-dark(var(--light-muted), var(--dark-muted));
       font-size: 0.9rem;
     }
   }
 
   .buttons-row {
     input {
-      color: var(--text) !important;
-      border: 1px solid var(--border) !important;
+      color: light-dark(var(--light-text), var(--dark-text)) !important;
+      border: 1px solid light-dark(var(--light-border), var(--dark-border)) !important;
       border-radius: var(--radius-sm) !important;
       padding: 10px 12px !important;
     }
@@ -367,17 +478,17 @@ form {
 input[type="text"],
 select {
   width: 100%;
-  border: 1px solid var(--border);
-  background: #050505;
-  color: var(--text);
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
+  background: light-dark(var(--light-panel-4), var(--dark-panel-4));
+  color: light-dark(var(--light-text), var(--dark-text));
   border-radius: 8px;
   padding: 10px 12px;
   outline: none;
 }
 
-.buttons-row {
+form .row.buttons-row, .buttons-row {
   margin-top: 14px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid light-dark(var(--light-border), var(--dark-border));
   padding-top: 12px;
   display: flex;
   gap: 10px;
@@ -393,11 +504,11 @@ select {
 .copiedHighlight,
 .passThruMessage {
   font-size: 0.85rem;
-  color: var(--text);
+  color: light-dark(var(--light-text), var(--dark-text));
   border-radius: 999px;
   padding: 6px 10px;
-  border: 1px solid var(--border);
-  background: #0b0b0b;
+  border: 1px solid light-dark(var(--light-border), var(--dark-border));
+  background: light-dark(var(--light-panel-3), var(--dark-panel-3));
 }
 
 .copiedHighlight {
@@ -423,6 +534,11 @@ select {
   display: none !important;
 }
 
+input[type=button],
+input[type=submit],
+input[type=reset] {
+  cursor: pointer;
+}
 
 #helptext {
   max-width: 52em !important;
@@ -438,7 +554,7 @@ select {
   }
 
   p {
-    color: #d4d4d8;
+    color: light-dark(var(--light-p),var(--dark-p));
     line-height: 1.6;
   }
 }
@@ -454,9 +570,10 @@ select {
     max-width: min(70vw, 420px);
     max-height: 60vh;
     border-radius: 10px;
-    border: 1px solid var(--border);
+    border: 1px solid light-dark(var(--light-border), var(--dark-border));
   }
 }
+
 
 
 @media (min-width: 768px) {
@@ -476,7 +593,7 @@ select {
       >.filter {
         grid-column: auto;
         border-top: 0;
-        border-left: 1px solid var(--border);
+        border-left: 1px solid light-dark(var(--light-border), var(--dark-border));
         background: transparent;
         padding: 10px 12px;
         justify-content: flex-end;
@@ -496,3 +613,8 @@ select {
     }
   }
 }
+
+.fancybox__viewport.is-draggable {
+  cursor: initial !important;
+}
+
