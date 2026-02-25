@@ -672,8 +672,9 @@ input[type=reset] {
 
 #flags {
   max-width: 600px;
-  h1 {
-    margin-bottom: 1em;
+  p:first-of-type {
+    margin-top: 5px;
+    font-size: 0.8em;
   }
 }
 #flags-picker {
