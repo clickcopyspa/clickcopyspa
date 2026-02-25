@@ -140,7 +140,7 @@ function getDatas() {
     document.getElementById("clickcopyspa-list").innerHTML = "";
     if (currData.length === 0) {
         let div = document.createElement("div");
-        div.innerHTML = "<div style='grid-column: 1/3'><em>You have not yet added any data. Once you have added something, simply click on it to copy it to your clipboard, so you can easily paste it to wherever you need.</em><br><br>This system runs directly on github using the code at <a href='https://github.com/clickcopyspa/clickcopyspa' target='_blank'>https://github.com/clickcopyspa/clickcopyspa</a>. All of your data is saved in your browser and is not accessible to anyone else. See the help page (question mark in the top right) for more information.</div>";
+        div.innerHTML = "<div style='grid-column: 1/3'><em>You have not yet added any data. Once you have added something, simply click on it to copy it to your clipboard, so you can easily paste it to wherever you need.</em><br><br>This system runs directly on GitHub using the code at <a href='https://github.com/clickcopyspa/clickcopyspa' target='_blank'>https://github.com/clickcopyspa/clickcopyspa</a>. All of your data is saved in your browser and is not accessible to anyone else. See the help page (question mark in the top right) for more information.</div>";
         div.classList.add("usage-frequent");
         div.classList.add("usage-occasional");
         div.classList.add("no-records");
