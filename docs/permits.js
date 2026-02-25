@@ -143,7 +143,7 @@ function getNumberplates() {
     document.getElementById("permits-list").innerHTML = "";
     if (currData.length === 0) {
         let div = document.createElement("div");
-        div.innerHTML = "<em>You have not yet added any number plates. Click the add button at the top to add one!</em>";
+        div.innerHTML = "<em>You have not yet added any number plates.</em>";
         div.classList.add("usage-frequent");
         div.classList.add("usage-occasional");
         div.classList.add("no-records");
