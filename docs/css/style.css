@@ -169,7 +169,6 @@ input:checked ~ .slider::before {
   right: 56px;
 
   img {
-    width: 22px;
     height: 22px;
     opacity: 0.9;
     display: block;
