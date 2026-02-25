@@ -22,7 +22,7 @@
   --light-bg: #fff;
   --light-panel: #fafafa;
   --light-panel-2: #f0f0f0;
-  --light-panel-3: #eaeaea;
+  --light-panel-3: #fafafa;
   --light-panel-4: #e0e0e0;
   --light-content: #fcfcfc;
 
@@ -361,9 +361,6 @@ button {
     padding: 12px 12px;
     border-top: 1px solid light-dark(var(--light-border), var(--dark-border));
 
-    &:first-child {
-      border-top: 0;
-    }
 
 
     >div {
