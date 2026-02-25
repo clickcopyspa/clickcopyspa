@@ -1,8 +1,8 @@
 document.getElementById("filter").addEventListener("input", function (e) {
     let filter = new RegExp(e.target.value, "gi");
-    let entries = document.getElementById("permits-list").children;
+    let entries = document.getElementById("clickcopyspa-list").children;
     for (let entry of entries) {
-        if (!e.target.value || entry.querySelector(".entry-name").innerText.match(filter) || entry.querySelector(".entry-numberplate").innerText.match(filter)) {
+        if (!e.target.value || entry.querySelector(".entry-name").innerText.match(filter) || entry.querySelector(".entry-data").innerText.match(filter)) {
             entry.classList.remove("hidden");
         } else {
             entry.classList.add("hidden");
@@ -21,9 +21,9 @@ tabs.addEventListener("click", function (e) {
             document.getElementById("filter").focus();
             e.target.closest(".tab").classList.add("active");
             let filter = new RegExp(e.target.value, "gi");
-            let entries = document.getElementById("permits-list").children;
+            let entries = document.getElementById("clickcopyspa-list").children;
             for (let entry of entries) {
-                if (!e.target.value || entry.querySelector(".entry-name").innerText.match(filter) || entry.querySelector(".entry-numberplate").innerText.match(filter)) {
+                if (!e.target.value || entry.querySelector(".entry-name").innerText.match(filter) || entry.querySelector(".entry-data").innerText.match(filter)) {
                     entry.classList.remove("hidden");
                 } else {
                     entry.classList.add("hidden");
@@ -31,7 +31,7 @@ tabs.addEventListener("click", function (e) {
             }
         } else {
             e.target.classList.add("active");
-            let entries = document.getElementById("permits-list").children;
+            let entries = document.getElementById("clickcopyspa-list").children;
             for (entry of entries) {
                 if ((e.target.classList.contains("frequent") && entry.classList.contains("usage-frequent"))
                     ||
@@ -58,21 +58,21 @@ function setLightDark() {
 
 document.getElementById("light-dark-toggle").addEventListener("change", function () {
     setLightDark();
-    window.localStorage.setItem("permitsLightDarkMode", document.getElementById("light-dark-toggle").checked ? "light" : "dark");
+    window.localStorage.setItem("clickcopyspaLightDarkMode", document.getElementById("light-dark-toggle").checked ? "light" : "dark");
 });
 
-function saveNumberplate(name, numberplate, usage, id) {
-    let currData = JSON.parse(window.localStorage.getItem("permitsData"));
+function saveData(name, data, usage, id) {
+    let currData = JSON.parse(window.localStorage.getItem("clickcopyspaData"));
     if (typeof currData === "undefined" || !currData) {
         currData = [];
     }
     let newData = [];
     let found = false;
     for (let existing of currData) {
-        if ((typeof existing.id === "undefined" && existing.numberplate === numberplate) || (typeof existing.id !== "undefined" && existing.id === id)) {
+        if ((typeof existing.id === "undefined" && existing.data === data) || (typeof existing.id !== "undefined" && existing.id === id)) {
             found = true;
             existing.name = name;
-            existing.numberplate = numberplate;
+            existing.data = data;
             existing.usage = usage;
             if (typeof existing.id === "undefined") {
                 existing.id = generateRandomString(10);
@@ -80,29 +80,29 @@ function saveNumberplate(name, numberplate, usage, id) {
         } else if (typeof existing.id !== "undefined" && existing.id !== id && existing.name === name) {
             alert("You already have an entry with the name " + name);
             return false;
-        } else if (typeof existing.id !== "undefined" && existing.id !== id && existing.numberplate === numberplate) {
-            alert("You already have an entry with numberplate " + numberplate);
+        } else if (typeof existing.id !== "undefined" && existing.id !== id && existing.data === data) {
+            alert("You already have an entry with data " + data);
             return false;
         }
 
         newData.push(existing);
     }
     if (!found) {
-        newData.push({numberplate: numberplate, name: name, usage: usage, id: id});
+        newData.push({data: data, name: name, usage: usage, id: id});
     }
-    window.localStorage.setItem("permitsData", JSON.stringify(newData));
+    window.localStorage.setItem("clickcopyspaData", JSON.stringify(newData));
     let message;
     if (found) {
-        message = numberplate + " was updated";
+        message = data + " was updated";
     } else {
-        message = numberplate + " was added";
+        message = data + " was added";
     }
     document.querySelector('.cancelEntry').click();
     let copied = document.createElement("div");
     copied.classList.add("passThruMessage");
     copied.id = generateRandomString(10);
     copied.innerHTML = "<em>" + message + "</em>";
-    document.getElementById("permits-header").appendChild(copied);
+    document.getElementById("clickcopyspa-header").appendChild(copied);
     setTimeout(function () {
         const element = document.getElementById(copied.id);
 
@@ -132,20 +132,20 @@ function getUsage() {
     else return "";
 }
 
-function getNumberplates() {
-    let currData = JSON.parse(window.localStorage.getItem("permitsData"));
+function getDatas() {
+    let currData = JSON.parse(window.localStorage.getItem("clickcopyspaData"));
     if (typeof currData === "undefined" || !currData) {
         currData = [];
     }
-    document.getElementById("permits-list").innerHTML = "";
+    document.getElementById("clickcopyspa-list").innerHTML = "";
     if (currData.length === 0) {
         let div = document.createElement("div");
-        div.innerHTML = "<div style='grid-column: 1/3'><em>You have not yet added any number plates. Once you have added a number plate, simply click on it to copy it to your clipboard, so you can easily paste it into your permit app.</em><br><br>This system runs directly on github using the code at <a href='https://github.com/lindymad/permits' target='_blank'>https://github.com/lindymad/permits</a>. All of your data is saved in your browser and is not accessible to anyone else. See the help page (question mark in the top right) for more information.</div>";
+        div.innerHTML = "<div style='grid-column: 1/3'><em>You have not yet added any data. Once you have added a number plate, simply click on it to copy it to your clipboard, so you can easily paste it to wherever you need.</em><br><br>This system runs directly on github using the code at <a href='https://github.com/clickcopyspa/clickcopyspa' target='_blank'>https://github.com/clickcopyspa/clickcopyspa</a>. All of your data is saved in your browser and is not accessible to anyone else. See the help page (question mark in the top right) for more information.</div>";
         div.classList.add("usage-frequent");
         div.classList.add("usage-occasional");
         div.classList.add("no-records");
 
-        document.getElementById("permits-list").appendChild(div);
+        document.getElementById("clickcopyspa-list").appendChild(div);
     } else {
 
         for (let entry of currData) {
@@ -158,11 +158,11 @@ function getNumberplates() {
             }
             let npwrap = document.createElement("div");
             let np = document.createElement("div");
-            npwrap.classList.add("entry-numberplate-wrapper");
+            npwrap.classList.add("entry-data-wrapper");
             np.classList.add("copy");
-            np.classList.add("entry-numberplate");
+            np.classList.add("entry-data");
             //np.classList.add("copy");
-            np.innerText = entry.numberplate;
+            np.innerText = entry.data;
             let name = document.createElement("div");
             name.classList.add("entry-name");
             name.innerText = entry.name;
@@ -183,7 +183,7 @@ function getNumberplates() {
             npwrap.appendChild(np);
             div.appendChild(npwrap);
             div.appendChild(actions);
-            document.getElementById("permits-list").appendChild(div);
+            document.getElementById("clickcopyspa-list").appendChild(div);
         }
     }
     if (document.querySelector(".tabs > div.active input")) {
@@ -199,17 +199,17 @@ document.getElementById("addeditform").addEventListener("submit", function () {
     if (!document.getElementById("addEditName").value) {
         error += "You must enter a name.\n";
     }
-    if (!document.getElementById("addEditNumberPlate").value) {
-        error += "You must enter a numberplate.\n";
+    if (!document.getElementById("addEditData").value) {
+        error += "You must enter a data.\n";
     }
     if (error) {
         alert(error);
     } else {
         let id = document.getElementById("addEditId").value
         if (!id) id = generateRandomString(10);
-        if (saveNumberplate(document.getElementById("addEditName").value, document.getElementById("addEditNumberPlate").value, document.getElementById("addEditUsage").value, id)) {
+        if (saveData(document.getElementById("addEditName").value, document.getElementById("addEditData").value, document.getElementById("addEditUsage").value, id)) {
             document.getElementById('addeditform').reset();
-            getNumberplates();
+            getDatas();
         }
     }
 });
@@ -260,25 +260,11 @@ const generateRandomString = (length) => {
     return result;
 }
 
-function updateCountry() {
-    let country = localStorage.getItem("permitsCountry");
 
-    if (!country) {
-        country = "gb";
-    }
-    document.documentElement.classList.add("country");
-    document.documentElement.dataset.country = country;
-    document.querySelector(".country-picker .selected img").setAttribute("src", "img/flags/" + country + ".png");
-}
 
 document.addEventListener("click", function (e) {
 
-    if (e.target.classList.contains("country-flag")) {
-        const country = e.target.dataset.flag;
-        window.localStorage.setItem("permitsCountry", country);
-        updateCountry();
-        document.querySelector(".f-button.is-close-button").click();
-    } else if (e.target.classList.contains("copy")) {
+    if (e.target.classList.contains("copy")) {
         copyTextToClipboard(e.target, e.target.innerText);
         let copied = document.createElement("div");
         copied.classList.add("copiedHighlight");
@@ -303,7 +289,7 @@ document.addEventListener("click", function (e) {
     } else if (e.target.classList.contains("edit-entry")) {
         document.getElementById("addEditId").value = e.target.closest(".entry").dataset.id;
         document.getElementById("addEditName").value = e.target.closest(".entry").querySelector(".entry-name").innerText;
-        document.getElementById("addEditNumberPlate").value = e.target.closest(".entry").querySelector(".entry-numberplate").innerText;
+        document.getElementById("addEditData").value = e.target.closest(".entry").querySelector(".entry-data").innerText;
         let usage;
         if (e.target.closest(".entry").classList.contains("usage-frequent")) {
             usage = "frequent";
@@ -312,24 +298,24 @@ document.addEventListener("click", function (e) {
         }
         document.getElementById("addEditIsNew").value = "noTemp";
         document.getElementById("addEditUsage").value = usage;
-        document.getElementById("add-permit").click();
+        document.getElementById("add-data").click();
     } else if (e.target.classList.contains("delete-entry-for-sure")) {
         let id = document.getElementById("delete-confirm-id").value;
-        let currData = JSON.parse(window.localStorage.getItem("permitsData"));
+        let currData = JSON.parse(window.localStorage.getItem("clickcopyspaData"));
         let newData = [];
         for (let entry of currData) {
             if (entry.id !== id) {
                 newData.push(entry);
             }
         }
-        window.localStorage.setItem("permitsData", JSON.stringify(newData));
+        window.localStorage.setItem("clickcopyspaData", JSON.stringify(newData));
 
         document.querySelector('.cancelEntry').click();
         let deletedHighlight = document.createElement("div");
         deletedHighlight.classList.add("passThruMessage");
         deletedHighlight.id = generateRandomString(10);
-        deletedHighlight.innerHTML = "<em>" + document.querySelector(".delete-confirm-numberplate").innerText + " (" + document.querySelector(".delete-confirm-name").innerText + ") has been deleted</em>";
-        document.getElementById("permits-header").appendChild(deletedHighlight);
+        deletedHighlight.innerHTML = "<em>" + document.querySelector(".delete-confirm-data").innerText + " (" + document.querySelector(".delete-confirm-name").innerText + ") has been deleted</em>";
+        document.getElementById("clickcopyspa-header").appendChild(deletedHighlight);
         setTimeout(function () {
             const element = document.getElementById(deletedHighlight.id);
 
@@ -347,29 +333,29 @@ document.addEventListener("click", function (e) {
         }, 2000);
         document.getElementById("delete-confirm-id").value = "";
         document.querySelector(".delete-confirm-name").innerText = "";
-        document.querySelector(".delete-confirm-numberplate").innerText = "";
-        getNumberplates();
+        document.querySelector(".delete-confirm-data").innerText = "";
+        getDatas();
     } else if (e.target.classList.contains("delete-entry")) {
         document.getElementById("delete-confirm-id").value = e.target.closest(".entry").dataset.id;
         document.querySelector(".delete-confirm-name").innerText = e.target.closest(".entry").querySelector(".entry-name").innerText;
-        document.querySelector(".delete-confirm-numberplate").innerText = e.target.closest(".entry").querySelector(".entry-numberplate").innerText;
-    } else if (e.target.id === "add-permit") {
+        document.querySelector(".delete-confirm-data").innerText = e.target.closest(".entry").querySelector(".entry-data").innerText;
+    } else if (e.target.id === "add-data") {
         if (document.getElementById("addEditIsNew").value === "noTemp") {
             document.getElementById("addEditIsNew").value = "no";
         } else {
             document.getElementById("addEditId").value = "";
             document.getElementById("addEditName").value = "";
             document.getElementById("addEditName").focus();
-            document.getElementById("addEditNumberPlate").value = "";
+            document.getElementById("addEditData").value = "";
             let usage = document.querySelector(".tabs>div.active");
             if (usage.classList.contains("occasional")) usage = "occasional";
             else usage = "frequent";
             document.getElementById("addEditUsage").value = usage;
         }
-    } else if (e.target.id === "export-permits") {
+    } else if (e.target.id === "export-clickcopyspa") {
         exportJSON();
-    } else if (e.target.id === "import-permits") {
-        if (confirm("Are you sure? This will overwrite all of your existing numberplates. Make sure you have exported your numberplates first!")) {
+    } else if (e.target.id === "import-clickcopyspa") {
+        if (confirm("Are you sure? This will overwrite all of your existing data. Make sure you have backed up your data first!")) {
             importJSON();
         }
 
@@ -384,7 +370,7 @@ document.addEventListener("click", function (e) {
 });
 
 function exportJSON() {
-    let currData = JSON.parse(window.localStorage.getItem("permitsData"));
+    let currData = JSON.parse(window.localStorage.getItem("clickcopyspaData"));
     if (typeof currData === "undefined" || !currData) {
         currData = [];
     }
@@ -394,7 +380,7 @@ function exportJSON() {
 
     let a = document.createElement('a');
     let date = new Date().toLocaleString().replaceAll(/[^0-9a-zA-Z]+/g, '_');
-    a.download = "Permits_Export_" + date + ".json";
+    a.download = "ClickCopySpa_Export_" + date + ".json";
     a.href = url;
 
     a.click();
@@ -432,13 +418,13 @@ function importJSON() {
             let lines = e.target.result;
             let newData = JSON.parse(lines);
             if (typeof newData === "object") {
-                window.localStorage.setItem("permitsData", JSON.stringify(newData));
-                getNumberplates();
+                window.localStorage.setItem("clickcopyspaData", JSON.stringify(newData));
+                getDatas();
                 let passThruMessage = document.createElement("div");
                 passThruMessage.classList.add("passThruMessage");
                 passThruMessage.id = generateRandomString(10);
-                passThruMessage.innerHTML = "<em>Numberplates have been imported</em>";
-                document.getElementById("permits-header").appendChild(passThruMessage);
+                passThruMessage.innerHTML = "<em>Backup has been restored</em>";
+                document.getElementById("clickcopyspa-header").appendChild(passThruMessage);
                 setTimeout(function () {
                     const element = document.getElementById(passThruMessage.id);
 
@@ -465,8 +451,7 @@ function importJSON() {
 
 
 setLightDark();
-updateCountry();
-getNumberplates();
+getDatas();
 
 
 function fadeIn() {

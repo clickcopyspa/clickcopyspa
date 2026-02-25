@@ -105,7 +105,6 @@ main {
 .github-wrapper,
 .qr-wrapper,
 .help-wrapper,
-.country-picker,
 .light-dark-toggle-wrapper {
     position: absolute;
     top: 14px;
@@ -188,14 +187,6 @@ a {
     color: light-dark(var(--light-link), var(--dark-link));
 }
 
-.country-picker {
-    right: 184px;
-    top: 17px;
-}
-
-.country-picker img {
-    max-height: 1em;
-}
 
 .qr-wrapper {
     right: 96px;
@@ -246,7 +237,7 @@ h1 {
 }
 
 
-#permits-header {
+#clickcopyspa-header {
     margin-top: 34px;
     display: flex;
     align-items: flex-start;
@@ -361,7 +352,7 @@ button {
 }
 
 
-#permits-list {
+#clickcopyspa-list {
     display: flex;
     flex-direction: column;
 
@@ -390,59 +381,20 @@ button {
     }
 }
 
-.entry-numberplate, .entry-name {
+.entry-data, .entry-name {
     cursor: pointer;
     text-decoration: none;
 }
 
-
-html.country[data-country=gb] .entry-numberplate {
-
-    background: linear-gradient(to bottom, #f8d038 0%, #f5ca2e 100%);
-    padding: .25em .5em 0.1em;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 1em;
-    border-radius: 5px;
-    border: 1px solid #000;
-    position: relative;
-    font-family: helvetica, ariel, sans-serif;
-    display: inline-flex;
-    min-width: 7em;
-    justify-content: center;
-    align-items: center;
-    color: black;
-
-}
-
-html.country[data-country=us] .entry-numberplate {
-
-    background: white;
-    padding: .5em .25em 0.3em;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 1em;
-    border-radius: 2px;
-    border: 1px solid #000;
-    position: relative;
-    font-family: helvetica, ariel, sans-serif;
-    display: inline-flex;
-    min-width: 5em;
-    justify-content: center;
-    align-items: center;
-    color: black;
-
-}
-
-html.country[data-country=earth] .entry-numberplate {
+.entry-data {
     color: light-dark(var(--light-link), var(--dark-link));
 
     border: 1px solid rgba(96, 165, 250, 0.35);
     background: rgba(96, 165, 250, 0.08);
     padding: 7px 10px;
-    border-radius: 999px;
-    display: inline-flex;
-    width: 7.5em;
+    border-radius: 10px;
+    display: inline-block;
+    width: 100%;
 
     &:hover {
         background: rgba(96, 165, 250, 0.12);
@@ -535,6 +487,7 @@ form {
 }
 
 input[type="text"],
+textarea,
 select {
     width: 100%;
     border: 1px solid light-dark(var(--light-border), var(--dark-border));
@@ -559,10 +512,10 @@ form .row.buttons-row, .buttons-row {
     position: relative;
 }
 
-.entry-numberplate-wrapper {
+.entry-data-wrapper {
     position: relative;
-    max-width: 8em;
-    min-width: 8em;
+
+    min-width: 5em;
 }
 
 
@@ -575,16 +528,21 @@ form .row.buttons-row, .buttons-row {
     border: 1px solid light-dark(var(--light-border), var(--dark-border));
     background: light-dark(var(--light-panel-3), var(--dark-panel-3));
 }
-
+#addEditData {
+    height: 6em;
+}
 .copiedHighlight {
     position: absolute;
-    right: -5em;
+    right: 1px;
     font-size: .5rem !important;
     background: #ffff81;
     color: black;
     padding: 4px 7px 4px;
-    top: 0;
+    bottom: calc(50% - 5px);
     z-index: 500;
+    border-radius: 8px;
+    height: 20px;
+
 }
 
 .fancybox__container .copiedHighlight {
@@ -673,11 +631,8 @@ input[type=reset] {
         right: 139px;
     }
 
-    .country-picker {
-        right: 189px;
-    }
 
-    #permits-header {
+    #clickcopyspa-header {
         align-items: center;
     }
 
@@ -709,9 +664,9 @@ input[type=reset] {
 
     }
 
-    #permits-list {
+    #clickcopyspa-list {
         > div {
-            grid-template-columns: 1.2fr 1fr auto;
+            grid-template-columns: 1.2fr 2fr auto;
             align-items: center;
             gap: 14px;
             position: relative;
@@ -759,10 +714,11 @@ input[type=reset] {
     font-style: italic;
 }
 
-.entry-numberplate::after {
+.entry-data::after {
     content: 'Click to copy';
     position: absolute;
     bottom: -1.5em;
+    left: 8px;
     font-size: 0.5em;
     color: #666;
     font-weight: normal;
