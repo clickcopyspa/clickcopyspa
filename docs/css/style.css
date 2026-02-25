@@ -631,6 +631,20 @@ input[type=reset] {
   main {
     padding: 22px;
   }
+  .qr-wrapper {
+    right: 101px;
+  }
+  .help-wrapper {
+  right: 21px;
+  }
+  .github-wrapper {
+  right: 61px;
+  }
+  .light-dark-toggle-wrapper {
+  right: 139px;}
+  .country-picker {
+  right: 189px;
+  }
 
   #permits-header {
     align-items: center;
