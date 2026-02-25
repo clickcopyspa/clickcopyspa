@@ -321,7 +321,7 @@ button {
       border-right: 0;
       padding: 8px 10px;
       justify-content: stretch;
-      background: #090909;
+      background: light-dark(var(--light-content), var(--dark-content));
 
       input {
         width: 100%;
