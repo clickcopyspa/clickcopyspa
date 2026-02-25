@@ -1,6 +1,3 @@
-
-
-
 document.getElementById("filter").addEventListener("input", function (e) {
     let filter = new RegExp(e.target.value, "gi");
     let entries = document.getElementById("permits-list").children;
@@ -60,7 +57,7 @@ function setLightDark() {
 
 document.getElementById("light-dark-toggle").addEventListener("change", function () {
     setLightDark();
-    window.localStorage.setItem("permitsLightDarkMode", document.getElementById("light-dark-toggle").checked?"light":"dark");
+    window.localStorage.setItem("permitsLightDarkMode", document.getElementById("light-dark-toggle").checked ? "light" : "dark");
 });
 
 function saveNumberplate(name, numberplate, usage, id) {
@@ -136,7 +133,6 @@ function getUsage() {
 
 function getNumberplates() {
     let currData = JSON.parse(window.localStorage.getItem("permitsData"));
-    console.log(currData);
     if (typeof currData === "undefined" || !currData) {
         currData = [];
     }
@@ -264,25 +260,24 @@ const generateRandomString = (length) => {
 }
 
 function updateCountry() {
-    let country=localStorage.getItem("permitsCountry");
+    let country = localStorage.getItem("permitsCountry");
 
     if (!country) {
-        country="gb";
+        country = "gb";
     }
-    console.log("Set country to ",country);
     document.documentElement.classList.add("country");
-    document.documentElement.dataset.country=country;
-    document.querySelector(".country-picker .selected img").setAttribute("src", "img/flags/"+country+".png");
+    document.documentElement.dataset.country = country;
+    document.querySelector(".country-picker .selected img").setAttribute("src", "img/flags/" + country + ".png");
 }
+
 document.addEventListener("click", function (e) {
 
     if (e.target.classList.contains("country-flag")) {
-        const country=e.target.dataset.flag;
+        const country = e.target.dataset.flag;
         window.localStorage.setItem("permitsCountry", country);
         updateCountry();
         document.querySelector(".f-button.is-close-button").click();
-    }
-    else if (e.target.classList.contains("copy")) {
+    } else if (e.target.classList.contains("copy")) {
         copyTextToClipboard(e.target, e.target.innerText);
         let copied = document.createElement("div");
         copied.classList.add("copiedHighlight");
@@ -304,8 +299,7 @@ document.addEventListener("click", function (e) {
             }, {once: true}); // { once: true } auto-removes the listener after it runs
 
         }, 1000);
-    }
-    else if (e.target.classList.contains("edit-entry")) {
+    } else if (e.target.classList.contains("edit-entry")) {
         document.getElementById("addEditId").value = e.target.closest(".entry").dataset.id;
         document.getElementById("addEditName").value = e.target.closest(".entry").querySelector(".entry-name").innerText;
         document.getElementById("addEditNumberPlate").value = e.target.closest(".entry").querySelector(".entry-numberplate").innerText;
@@ -318,8 +312,7 @@ document.addEventListener("click", function (e) {
         document.getElementById("addEditIsNew").value = "noTemp";
         document.getElementById("addEditUsage").value = usage;
         document.getElementById("add-permit").click();
-    }
-    else if (e.target.classList.contains("delete-entry-for-sure")) {
+    } else if (e.target.classList.contains("delete-entry-for-sure")) {
         let id = document.getElementById("delete-confirm-id").value;
         let currData = JSON.parse(window.localStorage.getItem("permitsData"));
         let newData = [];
@@ -379,15 +372,12 @@ document.addEventListener("click", function (e) {
             importJSON();
         }
 
-    }
-    else if (e.target.classList.contains("entry")) {
+    } else if (e.target.classList.contains("entry")) {
         e.target.querySelector(".copy").click();
-    }
-     else if (e.target.classList.contains("entry-name")||e.target.classList.contains("entry-actions")) {
+    } else if (e.target.classList.contains("entry-name") || e.target.classList.contains("entry-actions")) {
         e.target.closest(".entry").querySelector(".copy").click();
-    }
-    else {
-        console.log(e.target.classList);
+    } else {
+        //console.log(e.target.classList);
 
     }
 });
@@ -487,14 +477,17 @@ function fadeIn() {
         if (fade.style.opacity < 1) {
             let op = parseFloat(fade.style.opacity);
             op += 0.1;
-            fade.style.opacity=op;
+            fade.style.opacity = op;
         } else {
             clearInterval(intervalID);
         }
 
     }, 10);
 }
-setTimeout(function() {fadeIn();},30);
+
+setTimeout(function () {
+    fadeIn();
+}, 30);
 Fancybox.bind("[data-fancybox]", {
     // Your custom options
     width: 700,

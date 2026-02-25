@@ -329,6 +329,7 @@ button {
             padding: 8px 10px;
             justify-content: stretch;
             background: light-dark(var(--light-content), var(--dark-content));
+            gap: 1em;
 
             input {
                 width: 100%;
@@ -339,6 +340,8 @@ button {
                 padding: 10px 12px;
                 font-size: 0.95rem;
                 outline: none;
+                opacity: 0.3;
+                cursor: pointer;
 
                 &::placeholder {
                     color: #71717a;
@@ -347,6 +350,10 @@ button {
         }
     }
 
+    > .tabs > .filter.active input {
+        opacity: 1;
+        cursor: revert;
+    }
 
     > .content {
         background: light-dark(var(--light-content), var(--dark-content));
@@ -376,8 +383,9 @@ button {
             min-width: 0;
             padding: 0 0 8px 0;
         }
+
         > div:last-of-type {
-            padding-bottom:0;
+            padding-bottom: 0;
         }
     }
 }
@@ -635,6 +643,7 @@ input[type=reset] {
         border: 1px solid light-dark(var(--light-border), var(--dark-border));
     }
 }
+
 .entry-actions {
     margin-top: .6em;
 }
@@ -643,9 +652,10 @@ input[type=reset] {
     main {
         padding: 22px;
     }
+
     .entry-actions {
-    margin-top: 0;
-}
+        margin-top: 0;
+    }
 
     .qr-wrapper {
         right: 101px;
@@ -682,13 +692,21 @@ input[type=reset] {
                 border-left: 1px solid light-dark(var(--light-border), var(--dark-border));
                 background: transparent;
                 padding: 10px 12px;
-                justify-content: flex-end;
+                justify-content: flex-start;
+                gap: 1em;
+
+                label {
+                    padding-left: 1em;
+                    cursor: pointer;
+                }
 
                 input {
                     max-width: 340px;
+                    opacity: 0;
                 }
             }
         }
+
     }
 
     #permits-list {
@@ -744,7 +762,7 @@ input[type=reset] {
 .entry-numberplate::after {
     content: 'Click to copy';
     position: absolute;
-    bottom:-1.5em;
+    bottom: -1.5em;
     font-size: 0.5em;
     color: #666;
     font-weight: normal;
