@@ -159,9 +159,12 @@ function getNumberplates() {
             if (getUsage() && getUsage() !== entry.usage) {
                 div.classList.add("hidden");
             }
+            let npwrap = document.createElement("div");
             let np = document.createElement("div");
-            np.classList.add("entry-numberplate");
+            npwrap.classList.add("entry-numberplate-wrapper");
             np.classList.add("copy");
+            np.classList.add("entry-numberplate");
+            //np.classList.add("copy");
             np.innerText = entry.numberplate;
             let name = document.createElement("div");
             name.classList.add("entry-name");
@@ -180,7 +183,8 @@ function getNumberplates() {
             actions.appendChild(edit);
             actions.appendChild(deleteButton);
             div.appendChild(name);
-            div.appendChild(np);
+            npwrap.appendChild(np);
+            div.appendChild(npwrap);
             div.appendChild(actions);
             document.getElementById("permits-list").appendChild(div);
         }
@@ -259,15 +263,32 @@ const generateRandomString = (length) => {
     return result;
 }
 
+function updateCountry() {
+    let country=localStorage.getItem("permitsCountry");
 
+    if (!country) {
+        country="gb";
+    }
+    console.log("Set country to ",country);
+    document.documentElement.classList.add("country");
+    document.documentElement.dataset.country=country;
+    document.querySelector(".country-picker .selected img").setAttribute("src", "img/flags/"+country+".png");
+}
 document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("copy")) {
+
+    if (e.target.classList.contains("country-flag")) {
+        const country=e.target.dataset.flag;
+        window.localStorage.setItem("permitsCountry", country);
+        updateCountry();
+        document.querySelector(".f-button.is-close-button").click();
+    }
+    else if (e.target.classList.contains("copy")) {
         copyTextToClipboard(e.target, e.target.innerText);
         let copied = document.createElement("div");
         copied.classList.add("copiedHighlight");
         copied.id = generateRandomString(10);
         copied.innerHTML = "<em>Copied</em>";
-        e.target.appendChild(copied);
+        e.target.insertAdjacentElement("afterend", copied);
         setTimeout(function () {
             const element = document.getElementById(copied.id);
 
@@ -283,7 +304,8 @@ document.addEventListener("click", function (e) {
             }, {once: true}); // { once: true } auto-removes the listener after it runs
 
         }, 1000);
-    } else if (e.target.classList.contains("edit-entry")) {
+    }
+    else if (e.target.classList.contains("edit-entry")) {
         document.getElementById("addEditId").value = e.target.closest(".entry").dataset.id;
         document.getElementById("addEditName").value = e.target.closest(".entry").querySelector(".entry-name").innerText;
         document.getElementById("addEditNumberPlate").value = e.target.closest(".entry").querySelector(".entry-numberplate").innerText;
@@ -296,7 +318,8 @@ document.addEventListener("click", function (e) {
         document.getElementById("addEditIsNew").value = "noTemp";
         document.getElementById("addEditUsage").value = usage;
         document.getElementById("add-permit").click();
-    } else if (e.target.classList.contains("delete-entry-for-sure")) {
+    }
+    else if (e.target.classList.contains("delete-entry-for-sure")) {
         let id = document.getElementById("delete-confirm-id").value;
         let currData = JSON.parse(window.localStorage.getItem("permitsData"));
         let newData = [];
@@ -440,8 +463,8 @@ function importJSON() {
 }
 
 
-
 setLightDark();
+updateCountry();
 getNumberplates();
 
 

@@ -27,20 +27,20 @@
         if (darkModeMql && darkModeMql.matches) {
             // dark mode
             document.documentElement.classList.add("dark");
-            document.getElementById("light-dark-toggle").checked = false;
+
         } else {
             // light mode
             document.documentElement.classList.add("light");
-            document.getElementById("light-dark-toggle").checked = true;
+
         }
     }
     else if (savedDarkMode === "light") {
         document.documentElement.classList.add("light");
-        document.getElementById("light-dark-toggle").checked = true;
+
     }
     else if (savedDarkMode === "dark") {
         document.documentElement.classList.add("dark");
-        document.getElementById("light-dark-toggle").checked = false;
+
     }
 </script>
 </head>
@@ -48,12 +48,12 @@
 <body style="opacity:0;">
 
     <main>
-        <span class="help-wrapper" data-fancybox src="#helptext"><a class="help">?</a></span>
-        <span class="github-wrapper"><a href="https://github.com/lindymad/permits" target="_blank"><img
+        <span class="help-wrapper" title="Help" data-fancybox src="#helptext"><a class="help">?</a></span>
+        <span class="github-wrapper" title="View the Github page"><a href="https://github.com/lindymad/permits" target="_blank"><img
                     alt="Github Logo" src="img/GitHub_Invertocat_White.png" class="github-logo dark"><img
                     alt="Github Logo" src="img/GitHub_Invertocat_Black.png" class="github-logo light"></a></span>
-        <span class="qr-wrapper" data-fancybox src="#qrcode"><img src="img/qr-code.png" alt="QR Code thumbnail"></span>
-        <span class="light-dark-toggle-wrapper">
+        <span class="qr-wrapper" title="Share via QR code" data-fancybox src="#qrcode"><img src="img/qr-code.png" alt="QR Code thumbnail"></span>
+        <span class="light-dark-toggle-wrapper" title="Toggle Dark Mode">
             <span class = "toggle-switch">
                 <label for="light-dark-toggle">
                     <input type = "checkbox" id="light-dark-toggle">
@@ -61,26 +61,27 @@
                 </label>
             </span>
         </span>
+        <span class="country-picker" title="Choose Country">
+            <span class="selected" data-fancybox src="#flags"><img alt="Current Country Flag" src=""></span>
+        </span>
         <script type="text/javascript">
     //const savedDarkMode = window.localStorage.getItem("permitsLightDarkMode");
     if (!savedDarkMode) {
         const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
         if (darkModeMql && darkModeMql.matches) {
             // dark mode
-            document.documentElement.classList.add("dark");
             document.getElementById("light-dark-toggle").checked = false;
         } else {
             // light mode
-            document.documentElement.classList.add("light");
             document.getElementById("light-dark-toggle").checked = true;
         }
     }
     else if (savedDarkMode === "light") {
-        document.documentElement.classList.add("light");
+
         document.getElementById("light-dark-toggle").checked = true;
     }
     else if (savedDarkMode === "dark") {
-        document.documentElement.classList.add("dark");
+
         document.getElementById("light-dark-toggle").checked = false;
     }
 </script>
@@ -140,6 +141,17 @@
             <p>Numberplate: <strong class="delete-confirm-numberplate"></strong></p>
             <div class="row buttons-row"><input class="danger delete-entry-for-sure" type="button" value="Yes"><input
                     type="button" class="cancel" data-fancybox-close value="No"></div>
+        </div>
+        <div id="flags" style="display:none;">
+            <h1>Country Picker</h1>
+            <div id="flags-picker">
+                <div><a href="javascript:void(0)" class="set-country"><img data-flag="gb" class='country-flag' alt="GB Flag" src="img/flags/gb.png"></a><span>gb</span></div>
+                <div><a href="javascript:void(0)" class="set-country"><img data-flag="us" class='country-flag'  alt="US Flag" src="img/flags/us.png"></a><span>us</span></div>
+                <div><a href="javascript:void(0)" class="set-country"><img data-flag="earth" class='country-flag'  alt="Earth Image" src="img/flags/earth.png"></a><span>other</span></div>
+            </div>
+            <p id="add">To add a country, please open an issue on the <a href="https://github.com/lindymad/permits" target="_blank">github page</a>.
+                Please be sure to include a link to the relevant country flag from <a href="https://www.flaticon.com/packs/countrys-flags">https://www.flaticon.com/packs/countrys-flags</a>
+                and an idea of how it should look.</p>
         </div>
         <div id="helptext" style="display:none;">
             <h1>Help</h1>

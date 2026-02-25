@@ -8,3 +8,10 @@ All data is stored in your browser's localstorage, so your data won't be remembe
 Use the app at https://lindymad.github.io/permits/
 
 Design help by https://portfolio.jstokowski.com
+
+## Countries
+
+The numberplate styling is based on your selected country. The only options currently available are UK, USA, and Generic (the Earth icon). If you wish to add your country
+
+Flag Icons created by Freepik - Flaticon https://www.flaticon.com/packs/countrys-flags
+Earth Icon created by Freepik https://www.freepik.com/icon/earth_2590423
