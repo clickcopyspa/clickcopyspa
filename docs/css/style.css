@@ -259,15 +259,6 @@ button {
   }
 }
 
-#add-permit {
-  border-color: #3f3f46;
-
-  &:hover {
-    border-color: #52525b;
-  }
-}
-
-
 .tabs-wrapper {
   margin-top: 14px;
   border: 1px solid light-dark(var(--light-border), var(--dark-border));
