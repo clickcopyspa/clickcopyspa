@@ -17,7 +17,8 @@ tabs.addEventListener("click", function (e) {
         for (let tab of active) {
             tab.classList.remove("active");
         }
-        if (e.target.id === "filter") {
+        if (e.target.id === "filter" || e.target.classList.contains("filter")) {
+            document.getElementById("filter").focus();
             e.target.closest(".tab").classList.add("active");
             let filter = new RegExp(e.target.value, "gi");
             let entries = document.getElementById("permits-list").children;
